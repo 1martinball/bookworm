@@ -1,0 +1,118 @@
+.user-title-container {
+	position: relative;
+	width: 460px;
+	height: 120px;
+	border:1px solid black;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin: 200px auto 20px;
+}
+
+.titlePanel {
+	position: relative;
+	width: 460px;
+	height: 50px;
+	background-color: rgb(0,0,0);
+}
+
+.titlePanel > h1 {
+	position: absolute;
+	color: rgb(255,255,255);
+	font-family: sans-serif;
+	font-weight: normal;
+	font-size: 20px;
+	margin: 0;
+	padding:0;
+	top:15px;
+	left: 10px;
+}
+
+.controls {
+	position: relative;
+	background-color: rgb(236, 236, 236);
+	width: 460px;
+	height: 70px;
+/*	border-bottom: 1px solid black;*/
+}
+
+.userName {
+	position: absolute;
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    top: 24px;
+    left: 77px;
+    margin: 0;
+}
+
+.userPicHolder {
+	position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.63);
+}
+
+.userPicHolder > img {
+	width: 50px;
+	height: 50px;
+}
+
+#logOutBtn {
+	position: absolute;
+	background-color: rgb(226, 98, 92);
+	padding: 17px;
+	left:327px;
+	top:10px;
+	width:90px;
+	color:#FFF;
+	font-family:sans-serif;
+	text-decoration: none;
+	text-align: center;
+	outline:none;
+}
+
+#logOutBtn:hover {
+	background-color: rgb(232, 48, 39);
+}
+
+.buttons-container {
+	position: relative;
+	height: 150px;
+	width: 66%;
+	background-color: grey;
+	border: 1px solid black;
+	margin: 100px auto;
+	border-radius: 25px;
+}
+
+.actionButtons {
+	display: inline;
+    position: relative;
+    padding: 5px 30px;
+    color: #FFF;
+    font-family: sans-serif;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 42px;
+    margin-left: 9%;
+    top: 35%;
+	border-radius: 15px;
+}
+
+#addUserBtn {
+	background-color: darkblue;
+}
+
+#addBooksBtn {
+	background-color: darkgoldenrod;
+}
+
+#viewBooksBtn {
+	background-color: darkgreen;
+}
+

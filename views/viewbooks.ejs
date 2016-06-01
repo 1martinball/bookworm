@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Bookworm - Welcome</title>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/foundation.css">
+	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/js/foundation.js"></script>
+	<script src="/js/what-input.js"></script>
+</head>
+
+<body>
+	<div class="user-title-container">
+		<div class="titlePanel">
+			<h1>Bookworm | Add a new user</h1>
+		</div>
+		<div class="controls">
+			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
+			<p class="userName">
+				<%= user.fullName %>
+			</p>
+			<a href="login.ejs" id="logOutBtn">Logout</a>
+		</div>
+	</div>
+
+	<form>
+		<div class="row">
+			<div class="large-12 columns">
+				<label>Select Type</label>
+				<select>
+					<option value="read">Add book you have read</option>
+					<option value="wish">Add book you wish to read</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 medium-6 columns">
+				<label>Title:</label>
+				<input type="text" placeholder="Book title goes here" />
+			</div>
+			<div class="large-6 medium-6 columns">
+				<label>Author:</label>
+				<input type="text" placeholder="Authors name goes here" />
+			</div>
+			<div class="large-4 medium-4 columns">
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<label>Select Genre</label>
+				<select>
+					<option value="action">Action/Adventure</option>
+					<option value="thriller">Thriller</option>
+					<option value="scifi">Sci-fi</option>
+					<option value="horror">Horror</option>
+					<option value="history">Historical</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-6 medium-6 columns">
+				<a href="menu" class="button wide500">Simple Button</a>
+			</div>
+		</div>
+	</form>
+
+
+</body>
+
+</html>

@@ -23,10 +23,14 @@ module.exports = () => {
 				});
 			},
 			'/addbooks': (req, res, next) => {
-				res.render('chatroom');
+				res.render('addbooks', {
+					user: req.user
+				});
 			},
 			'/viewbooks': (req, res, next) => {
-				res.render('chatroom');
+				res.render('viewbooks', {
+					user: req.user
+				});
 			},
 			'/menu': (req, res, next) => {
 				res.render('menu', {

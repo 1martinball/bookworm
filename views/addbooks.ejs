@@ -7,8 +7,10 @@
 	<link rel="stylesheet" href="/css/base.css">
 	<link rel="stylesheet" href="/css/foundation.css">
 	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/js/jquery.validate.min.js"></script>
 	<script src="/js/foundation.js"></script>
 	<script src="/js/what-input.js"></script>
+	<script src="/js/bookworm.js"></script>
 </head>
 
 <body>
@@ -25,46 +27,90 @@
 		</div>
 	</div>
 
-	<form>
+	<form id="addBooksForm" method="get" action="addbook">
 		<div class="row">
 			<div class="large-12 columns">
 				<label>Select Type</label>
-				<select>
-					<option value="read">Add book you have read</option>
-					<option value="wish">Add book you wish to read</option>
+				<select id="read" name="read">
+					<option value=true>Add book you have read</option>
+					<option value=false>Add book you wish to read</option>
 				</select>
 			</div>
 		</div>
 		<div class="row">
 			<div class="large-6 medium-6 columns">
-				<label>Title:</label>
-				<input type="text" placeholder="Book title goes here" />
+				<label for ='title'>Title:
+				<input type="text" id='title' name='title' placeholder="Book title goes here" />
+					</label>
 			</div>
 			<div class="large-6 medium-6 columns">
-				<label>Author:</label>
-				<input type="text" placeholder="Authors name goes here" />
+				<label for='author'>Author:
+				<input type="text" id='author' name='author' placeholder="Authors name goes here" />
+					</label>
 			</div>
-			<div class="large-4 medium-4 columns">
+		</div>
+		<div class="row">
+			<div class="large-6 medium-6 columns">
+				<input type="radio" name="fiction" value=true id="fictionYes" checked="checked">
+				<label for="fictionYes">Fiction</label>
+				<input type="radio" name="fiction" value=false id="fictionNo">
+				<label for="fictionNo">Non-fiction</label>
+			</div>
+		</div>
+		<div class="row" id="fGenreContainer">
+			<div class="large-12 columns">
+				<label>Select Genre</label>
+				<select id="fgenre" name='genre'>
+					<option value="">Choose genre</option>
+					<option value="f-action">Action/Adventure</option>
+					<option value="f-thriller">Thriller</option>
+					<option value="f-scifi">Sci-fi</option>
+					<option value="f-horror">Horror</option>
+					<option value="f-history">Historical</option>
+				</select>
+			</div>
+		</div>
+		<div class="row hide" id="nfGenreContainer">
+			<div class="large-12 columns">
+				<label>Select Genre</label>
+				<select id="nfgenre" name='genre'>
+					<option value="">Choose genre</option>
+					<option value="nf-comp">Computing</option>
+					<option value="nf-self">Self development</option>
+					<option value="nf-hist">Historical</option>
+					<option value="nf-auto">Autobiography</option>
+					<option value="nf-bio">Biography</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="large-3 columns">
+				<label>Year</label>
+				<select id="year" name='year'>
+					<% for(var i=0; i < 10; i++){ %>
+					<option value=<%= new Date().getFullYear()-i %>><%= new Date().getFullYear()-i %></option>
+					<% } %>
+				</select>
 			</div>
 		</div>
 		<div class="row">
 			<div class="large-12 columns">
-				<label>Select Genre</label>
-				<select>
-					<option value="action">Action/Adventure</option>
-					<option value="thriller">Thriller</option>
-					<option value="scifi">Sci-fi</option>
-					<option value="horror">Horror</option>
-					<option value="history">Historical</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-6 medium-6 columns">
-				<a href="menu" class="button wide500">Simple Button</a>
+				<input class="button expand large-12" type="submit" value="Add Book" />
 			</div>
 		</div>
 	</form>
+	<% if(book !== null){ %>
+		<div class="row">
+			<div id="addBookActionMsg" class="large-12 columns">
+				
+				<% if(!(book instanceof Error)){ %>
+					<h4 class="success large-6 button expand centered">Added <%= book.title %> successfully</h4>
+				<% } else{ %>
+
+				<% } %>
+			</div>
+		</div>
+	<% } %>
 
 
 </body>

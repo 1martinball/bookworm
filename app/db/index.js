@@ -14,11 +14,22 @@ const bwUser = new Mongoose.Schema({
 	profilePic: String
 });
 
-//turn the schema into a usable model
+const bwBook = new Mongoose.Schema({
+	title: String,
+	author: String,
+	fiction: Boolean,
+	read: Boolean,
+	genre: String,
+	date: String
+});
+
+
 let userModel = Mongoose.model('bwUser', bwUser);
+let bookModel = Mongoose.model('bwBook', bwBook);
 
 module.exports = {
 	Mongoose,
-	userModel
+	userModel,
+	bookModel
 }
 

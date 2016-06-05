@@ -1,24 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Bookworm - Rooms</title>
-	<link rel="stylesheet" href="/css/base.css">
-	<script src="/js/jquery-2.1.4.min.js"></script>
-</head>
-<body>
-	<div class="user-title-container">
-		<div class="titlePanel">
-			<h1>Bookworm | Choose an option below</h1>
-		</div>
-		<div class="controls">
-			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
-			<p class="userName"><%= user.fullName %></p>
-			<a href="login.ejs" id="logOutBtn">Logout</a>
-		</div>
-	</div>
+<% include header %>
 	<div class="buttons-container">
-			<a class="actionButtons" id="addUserBtn" href="adduser">Add User</a>
+<!--			<a class="actionButtons" id="addUserBtn" href="adduser">Add User</a>-->
 			<a class="actionButtons" id="addBooksBtn" href="addbooks">Add Books</a>
 			<a class="actionButtons" id="viewBooksBtn" href="viewbooks">View Books</a>
 	</div>

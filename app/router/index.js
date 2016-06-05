@@ -7,11 +7,14 @@ module.exports = () => {
 	let routes = {
 		'get': {
 			'/': (req, res, next) => {
-				res.render('login');
+				res.render('login', {
+					page: "Login or Register"
+				});
 			},
 			'/rooms': (req, res, next) => {
 				res.render('rooms', {
-					user: req.user
+					user: req.user,
+					page: "Rooms"
 				});
 			},
 			'/chat': (req, res, next) => {
@@ -19,13 +22,15 @@ module.exports = () => {
 			},
 			'/adduser': (req, res, next) => {
 				res.render('adduser', {
-					user: req.user
+					user: req.user,
+					page: "Register new user"
 				});
 			},
 			'/addbooks': (req, res, next) => {
 				
 				res.render('addbooks', {
 					user: req.user,
+					page: "Add Books",
 					book: null
 				});
 			},
@@ -40,18 +45,21 @@ module.exports = () => {
 				//console.log('Book = ' + book)
 				res.render('addbooks', {
 					user: req.user,
+					page: "Add Books",
 					book: book
 				});
 				
 			},
 			'/viewbooks': (req, res, next) => {
 				res.render('viewbooks', {
-					user: req.user
+					user: req.user,
+					page: "View book lists"
 				});
 			},
 			'/menu': (req, res, next) => {
 				res.render('menu', {
-					user: req.user
+					user: req.user,
+					page: "Choose an option below"
 				});
 			},
 			'/auth/facebook': passport.authenticate('facebook'),

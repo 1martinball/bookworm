@@ -1,14 +1,42 @@
+
+
+
+
+let fictionGenreList = ["Action/Adventure", "Sci-fi", "Fantasy", "Thriller", "Horror", "Crime", "Romance", "Humour", "Period"];
+let nonfictionGenreList = ["Autobiography", "Biography", "Self-Development", "Computing", "Music", "History", "Nature", "Humour", "Other"];
+
 $(document).ready(function () {
+	
+	function populateGenreList(genreList){
+		$.each(genreList, function (i, item) {
+			$('#genre').append($('<option>', { 
+				value: i+1,
+				text : item
+			}));
+		});
+	};
+			   
+	if($('#fictionYes').is(':checked')){
+		$('#genre').html('');
+		populateGenreList(fictionGenreList);
+	} else if($('#fictionNo').is(':checked')){
+		$('#genre').html('');
+		populateGenreList(nonfictionGenreList);
+	} else {
+		$('#genre').html('Any');
+		populateGenreList(fictionGenreList);
+		populateGenreList(nonfictionGenreList);
+
+	}
 
 	$('#fictionYes').click(function () {
-		$('#fGenreContainer').removeClass('hide');
-		$('#nfGenreContainer').addClass('hide');
-		$('#nfgenre')
-	})
+		$('#genre').html('');
+		populateGenreList(fictionGenreList);
+	});
 
 	$('#fictionNo').click(function () {
-		$('#nfGenreContainer').removeClass('hide');
-		$('#fGenreContainer').addClass('hide');
+		$('#genre').html('');
+		populateGenreList(nonfictionGenreList);
 	});
 
 	setTimeout(function () {
@@ -53,4 +81,4 @@ $(document).ready(function () {
 	});
 
 
-})
+});

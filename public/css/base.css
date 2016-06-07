@@ -1,33 +1,18 @@
-.user-title-container {
-	position: relative;
-	width: 460px;
-	height: 120px;
-	border:1px solid black;
-	top:0;
-	bottom:0;
-	left:0;
-	right:0;
-	margin: 50px auto 150px;
+#top-panel-container{
+	height: 200px;
+	margin-bottom: 50px;
+	background-image: url("../img/bookstore-1488357.jpg");
 }
 
-.titlePanel {
-	position: relative;
-	width: 460px;
-	height: 50px;
+.header {
 	background-color: rgb(0,0,0);
-	margin: 50px auto
 }
 
-.titlePanel > h1 {
-	position: absolute;
+.header > h1 {
 	color: rgb(255,255,255);
 	font-family: sans-serif;
 	font-weight: normal;
 	font-size: 20px;
-	margin: 0;
-	padding:0;
-	top:15px;
-	left: 10px;
 }
 
 .controls {
@@ -81,44 +66,6 @@
 	background-color: rgb(232, 48, 39);
 }
 
-.wide500 {
-	width: 30rem;
-	text-align: center;
-}
 
-.buttons-container {
-	position: relative;
-	height: 150px;
-	width: 66%;
-	background-color: grey;
-	border: 1px solid black;
-	margin: 100px auto;
-	border-radius: 25px;
-}
 
-.actionButtons {
-	display: inline;
-    position: relative;
-    padding: 5px 30px;
-    color: #FFF;
-    font-family: sans-serif;
-    text-decoration: none;
-    text-align: center;
-    border: 1px solid black;
-    font-size: 42px;
-    margin-left: 9%;
-    top: 35%;
-	border-radius: 15px;
-}
 
-#addUserBtn {
-	background-color: darkblue;
-}
-
-#addBooksBtn {
-	background-color: darkgoldenrod;
-}
-
-#viewBooksBtn {
-	background-color: darkgreen;
-}

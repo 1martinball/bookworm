@@ -1,70 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+<% include header %>
 
-<head>
-	<meta charset="UTF-8">
-	<title>Bookworm - Welcome</title>
-	<link rel="stylesheet" href="/css/base.css">
-	<link rel="stylesheet" href="/css/foundation.css">
-	<script src="/js/jquery-2.1.4.min.js"></script>
-	<script src="/js/foundation.js"></script>
-	<script src="/js/what-input.js"></script>
-</head>
-
-<body>
-	<div class="user-title-container">
-		<div class="titlePanel">
-			<h1>Bookworm | Add a new user</h1>
-		</div>
-		<div class="controls">
-			<div class="userPicHolder"><img src="<%= user.profilePic %>" alt="<%= user.fullName %>"></div>
-			<p class="userName">
-				<%= user.fullName %>
-			</p>
-			<a href="login.ejs" id="logOutBtn">Logout</a>
-		</div>
-	</div>
-
-	<form>
+	<form id="viewBooksForm" method="get" action="findbooks">
 		<div class="row">
-			<div class="large-12 columns">
-				<label>Select Type</label>
-				<select>
-					<option value="read">Add book you have read</option>
-					<option value="wish">Add book you wish to read</option>
-				</select>
+			<div class="large-6 large-centered columns">
+				<input type="radio" name="wishlist" value=false id="wishlistNo" checked="checked">
+				<label for="wishlistNo">Read already</label>
+				<input type="radio" name="wishlist" value=true id="wishlistYes">
+				<label for="wishlistYes">Wanna read</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="large-6 large-centered columns">
+				<input type="radio" name="fiction" value=1 id="fictionYes">
+				<label for="fictionYes">Fiction</label>
+				<input type="radio" name="fiction" value=2 id="fictionNo">
+				<label for="fictionNo">Non-fiction</label>
+				<input type="radio" name="fiction" value=3 id="fictionAll" checked="checked">
+				<label for="fictionAll">All</label>
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 medium-6 columns">
-				<label>Title:</label>
-				<input type="text" placeholder="Book title goes here" />
-			</div>
-			<div class="large-6 medium-6 columns">
-				<label>Author:</label>
-				<input type="text" placeholder="Authors name goes here" />
-			</div>
-			<div class="large-4 medium-4 columns">
-			</div>
-		</div>
-		<div class="row">
-			<div class="large-12 columns">
+			<div class="large-6 large-centered columns">
 				<label>Select Genre</label>
-				<select>
-					<option value="action">Action/Adventure</option>
-					<option value="thriller">Thriller</option>
-					<option value="scifi">Sci-fi</option>
-					<option value="horror">Horror</option>
-					<option value="history">Historical</option>
+				<select id="genre" name='genre'>
 				</select>
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-6 medium-6 columns">
-				<a href="menu" class="button wide500">Simple Button</a>
+			<div class="large-6 large-centered columns">
+				<label>Year</label>
+				<select id="year" name='year' placeholder="Please Select">
+					<option value="any">Any</option>
+					<% for(var i=0; i < 100; i++){ %>
+						<option value=<%= new Date().getFullYear()-i %>><%= new Date().getFullYear()-i %></option>
+					<% } %>
+				</select>
 			</div>
 		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<input class="button expand large-12" type="submit" value="Find Books" />
+			</div>
+		</div>
+		
 	</form>
+	
+	<div id='resultsContainer'>
+	
+		<% if(booksFound){ %>			
+				<p> 
+					<%= 'BooksFound = ' + books %>
+				</p>
+		<% } %>
+		
+		
+		
+		
+	</div>
 
 
 </body>

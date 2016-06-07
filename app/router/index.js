@@ -11,15 +11,6 @@ module.exports = () => {
 					page: "Login or Register"
 				});
 			},
-			'/rooms': (req, res, next) => {
-				res.render('rooms', {
-					user: req.user,
-					page: "Rooms"
-				});
-			},
-			'/chat': (req, res, next) => {
-				res.render('chatroom');
-			},
 			'/adduser': (req, res, next) => {
 				res.render('adduser', {
 					user: req.user,
@@ -27,7 +18,6 @@ module.exports = () => {
 				});
 			},
 			'/addbooks': (req, res, next) => {
-				
 				res.render('addbooks', {
 					user: req.user,
 					page: "Add Books",
@@ -38,11 +28,8 @@ module.exports = () => {
 				console.log("Hello in router");
 				let book = h.addBookData(req)
 					.catch(error => {
-						//console.log('Catching Error = ' + error);
 						book = error;
-						//console.log('Catching error book = ' + book);
 					});
-				//console.log('Book = ' + book)
 				res.render('addbooks', {
 					user: req.user,
 					page: "Add Books",
@@ -50,9 +37,28 @@ module.exports = () => {
 				});
 				
 			},
+			'/findbooks': (req, res, next) => {
+				let booksFound = false;
+				let books = h.findBookData(req)
+					.catch(error => {
+						book = error;
+					});
+				if(books !== null && !books.isEmptyObject){
+					booksFound = true;
+				}
+				res.render('viewbooks', {
+					user: req.user,
+					page: "View book lists",
+					books: books,
+					booksFound: booksFound
+				});
+				
+			},
 			'/viewbooks': (req, res, next) => {
 				res.render('viewbooks', {
 					user: req.user,
+					booksFound: false,
+					books: null,
 					page: "View book lists"
 				});
 			},
@@ -61,12 +67,7 @@ module.exports = () => {
 					user: req.user,
 					page: "Choose an option below"
 				});
-			},
-			'/auth/facebook': passport.authenticate('facebook'),
-			'/auth/facebook/callback': passport.authenticate('facebook', {
-				successRedirect: '/menu',
-				failureRedirect:'/'
-			})
+			}
 		},
 		'post': {
 			

@@ -76,22 +76,70 @@ let addBookData = request => {
 			genre: request.params.genre,
 			date: request.params.year
 		});
-		
+
 		newBook.save(error => {
-			if(error){
+			if (error) {
 				reject(new Error("Error saving book to repository"));
 			} else {
 				resolve(newBook);
 			}
-			
+
 		});
 	});
 }
+
+
+let findBookData = request => {
+
+	return new Promise((resolve, reject) => {
+		let searchRead = req.params.read;
+		let searchFiction = req.params.fiction;
+		let searchGenre = req.params.genre = "any" ? "" : req.params.genre;
+		let searchYear = req.params.year = "any" ? "" : req.params.year;
+
+		try {
+			if (searchYear === "" & genre === "") {
+				let books = db.find({
+					read: searchRead,
+					fiction: searchFiction
+				});
+			} else if (searchYear !== "" & genre === "") {
+				let books = db.find({
+					read: searchRead,
+					fiction: searchFiction,
+					year: searchYear
+				});
+			} else if (searchYear === "" & genre !== "") {
+				let books = db.find({
+					read: searchRead,
+					fiction: searchFiction,
+					genre: searchGenre
+				});
+			} else {
+				let books = db.find({
+					read: searchRead,
+					fiction: searchFiction,
+					genre: searchGenre,
+					year: searchYear
+				});
+			}
+		}
+		catch(error){
+			reject(new Error("Error during book search"));
+		}
+		
+		resolve(books);
+	});
+}
+
+
+
 
 module.exports = {
 	route,
 	findOne,
 	createNewUser,
 	findById,
-	addBookData
+	addBookData,
+	findBookData
 }

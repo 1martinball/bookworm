@@ -10,7 +10,7 @@ $(document).ready(function () {
 	function populateGenreList(genreList){
 		$.each(genreList, function (i, item) {
 			$('#genre').append($('<option>', { 
-				value: i+1,
+				value: item,
 				text : item
 			}));
 		});
@@ -22,21 +22,34 @@ $(document).ready(function () {
 	} else if($('#fictionNo').is(':checked')){
 		$('#genre').html('');
 		populateGenreList(nonfictionGenreList);
-	} else {
-		$('#genre').html('Any');
+	} else if($('#fictionAll').is(':checked')){
+		populateGenreList(["Any"]);
 		populateGenreList(fictionGenreList);
 		populateGenreList(nonfictionGenreList);
-
+	} else {
+		populateGenreList(fictionGenreList);
+		populateGenreList(nonfictionGenreList);
 	}
 
 	$('#fictionYes').click(function () {
 		$('#genre').html('');
+		if($('#genre').hasClass('add-any-option')){
+			populateGenreList(["Any"]);
+		}
 		populateGenreList(fictionGenreList);
 	});
 
 	$('#fictionNo').click(function () {
 		$('#genre').html('');
+		if($('#genre').hasClass('add-any-option')){
+			populateGenreList(["Any"]);
+		}
 		populateGenreList(nonfictionGenreList);
+	});
+	
+	$('#fictionAll').click(function () {
+		$('#genre').html('');
+		populateGenreList(["All"].concat(fictionGenreList.concat(nonfictionGenreList)));
 	});
 
 	setTimeout(function () {

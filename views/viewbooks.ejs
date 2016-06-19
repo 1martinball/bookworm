@@ -3,27 +3,27 @@
 	<form id="viewBooksForm" method="get" action="findbooks">
 		<div class="row">
 			<div class="large-6 large-centered columns">
-				<input type="radio" name="wishlist" value=false id="wishlistNo" checked="checked">
+				<input type="radio" name="read" value=true id="wishlistNo" checked="checked">
 				<label for="wishlistNo">Read already</label>
-				<input type="radio" name="wishlist" value=true id="wishlistYes">
+				<input type="radio" name="read" value=false id="wishlistYes">
 				<label for="wishlistYes">Wanna read</label>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="large-6 large-centered columns">
-				<input type="radio" name="fiction" value=1 id="fictionYes">
+				<input type="radio" name="fiction" value=true id="fictionYes">
 				<label for="fictionYes">Fiction</label>
-				<input type="radio" name="fiction" value=2 id="fictionNo">
+				<input type="radio" name="fiction" value=false id="fictionNo">
 				<label for="fictionNo">Non-fiction</label>
-				<input type="radio" name="fiction" value=3 id="fictionAll" checked="checked">
+				<input type="radio" name="fiction" value="all" id="fictionAll" checked="checked">
 				<label for="fictionAll">All</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="large-6 large-centered columns">
 				<label>Select Genre</label>
-				<select id="genre" name='genre'>
+				<select id="genre" name='genre' class="add-any-option">
 				</select>
 			</div>
 		</div>
@@ -47,11 +47,23 @@
 	</form>
 	
 	<div id='resultsContainer'>
-	
-		<% if(booksFound){ %>			
-				<p> 
-					<%= 'BooksFound = ' + books %>
+	<p>
+		This is start of books:-
+		</p>
+		<% if(booksFound){ %>
+		<p>
+			found some books
+		</p>
+				
+				<%for (eachBook in books) { %>
+				<p>
+					Inside loop <%= eachBook %>
 				</p>
+								
+				<p> 
+					<%= 'BooksFound = ' + books[eachBook].title + ' by ' + books[eachBook].author%>
+				</p>
+					<% } %>
 		<% } %>
 		
 		

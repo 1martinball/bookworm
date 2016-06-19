@@ -69,12 +69,12 @@ let addBookData = request => {
 	//console.log(request)
 	return new Promise((resolve, reject) => {
 		let newBook = new db.bookModel({
-			title: request.params.title,
-			author: request.params.author,
-			read: request.params.read,
-			fiction: request.params.fiction,
-			genre: request.params.genre,
-			date: request.params.year
+			title: request.query.title,
+			author: request.query.author,
+			read: request.query.read,
+			fiction: request.query.fiction,
+			genre: request.query.genre,
+			date: request.query.year
 		});
 
 		newBook.save(error => {
@@ -83,52 +83,68 @@ let addBookData = request => {
 			} else {
 				resolve(newBook);
 			}
-
 		});
 	});
 }
 
 
-let findBookData = request => {
+let findBookData = req => {
 
 	return new Promise((resolve, reject) => {
-		let searchRead = req.params.read;
-		let searchFiction = req.params.fiction;
-		let searchGenre = req.params.genre = "any" ? "" : req.params.genre;
-		let searchYear = req.params.year = "any" ? "" : req.params.year;
-
-		try {
-			if (searchYear === "" & genre === "") {
-				let books = db.find({
-					read: searchRead,
-					fiction: searchFiction
-				});
-			} else if (searchYear !== "" & genre === "") {
-				let books = db.find({
-					read: searchRead,
-					fiction: searchFiction,
-					year: searchYear
-				});
-			} else if (searchYear === "" & genre !== "") {
-				let books = db.find({
-					read: searchRead,
-					fiction: searchFiction,
-					genre: searchGenre
-				});
-			} else {
-				let books = db.find({
-					read: searchRead,
-					fiction: searchFiction,
-					genre: searchGenre,
-					year: searchYear
-				});
-			}
+		let read = req.query.read;
+		let fiction = req.query.fiction;
+		let genre = req.query.genre;
+		let year = req.query.year;
+		console.log("Read : " + read + ", Fiction : " + fiction + ", Genre : " + genre + ", Year : " + year);
+		if (year === "any" & genre === "any") {
+			let books = db.bookModel.find({
+				read: read,
+				fiction: fiction
+			}, (err, books) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(books);
+				}
+			});
+		} else if (year !== "any" & genre === "any") {
+			let books = db.bookModel.find({
+				read: read,
+				fiction: fiction,
+				year: year
+			}, (err, books) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(books);
+				}
+			});
+		} else if (year === "any" & genre !== "any") {
+			let books = db.bookModel.find({
+				read: read,
+				fiction: fiction,
+				genre: genre
+			}, (err, books) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(books);
+				}
+			});
+		} else {
+			let books = db.bookModel.find({
+				read: read,
+				fiction: fiction,
+				genre: genre,
+				year: year
+			}, (err, books) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(books);
+				}
+			});
 		}
-		catch(error){
-			reject(new Error("Error during book search"));
-		}
-		
-		resolve(books);
 	});
 }
 

@@ -25,34 +25,35 @@ module.exports = () => {
 				});
 			},
 			'/addbook': (req, res, next) => {
-				console.log("Hello in router");
-				let book = h.addBookData(req)
-					.catch(error => {
-						book = error;
+				h.addBookData(req).then(book => {
+					console.log("Returned saved book : " + book);
+					res.render('addbooks', {
+						user: req.user,
+						page: "Add Books",
+						book: book
 					});
-				res.render('addbooks', {
-					user: req.user,
-					page: "Add Books",
-					book: book
+				})
+				.catch(err => {
+					console.log(err);
 				});
-				
 			},
 			'/findbooks': (req, res, next) => {
 				let booksFound = false;
-				let books = h.findBookData(req)
-					.catch(error => {
-						book = error;
+				h.findBookData(req).then(books => {
+					if (books !== null && !books.isEmptyObject) {
+						booksFound = true;
+						console.log(books);
+					}
+					res.render('viewbooks', {
+						user: req.user,
+						page: "View book lists",
+						books: books,
+						booksFound: booksFound
 					});
-				if(books !== null && !books.isEmptyObject){
-					booksFound = true;
-				}
-				res.render('viewbooks', {
-					user: req.user,
-					page: "View book lists",
-					books: books,
-					booksFound: booksFound
-				});
-				
+				})
+				.catch(err => {
+					console.log(err);
+				})
 			},
 			'/viewbooks': (req, res, next) => {
 				res.render('viewbooks', {
@@ -70,16 +71,13 @@ module.exports = () => {
 			}
 		},
 		'post': {
-			
+
 		},
 		'NA': (req, res, next) => {
-			res.status(404).sendFile(process.cwd()+'/views/404.htm');
+			res.status(404).sendFile(process.cwd() + '/views/404.htm');
 		}
 	}
 
 	return h.route(routes);
 
 }
-
-
-

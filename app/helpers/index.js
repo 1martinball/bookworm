@@ -95,57 +95,70 @@ let findBookData = req => {
 		let fiction = req.query.fiction;
 		let genre = req.query.genre;
 		let year = req.query.year;
+		let findQuery = constructFindQuery(read, fiction, genre, year);
 		console.log("Read : " + read + ", Fiction : " + fiction + ", Genre : " + genre + ", Year : " + year);
-		if (year === "any" & genre === "any") {
-			let books = db.bookModel.find({
+		let books = db.bookModel.find(findQuery, (err, books) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(books);
+			}
+		});
+	});
+}
+
+function constructFindQuery(read, fiction, genre, year){
+	let returnModel = {};
+	if(fiction.toUpperCase() === "ALL"){
+		if(year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY"){
+			returnModel = {
+				read: read
+			}
+		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY"){
+			returnModel = {
+				read: read,
+				genre: genre
+			}
+		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY"){
+			returnModel = {
+				read: read,
+				date: year
+			}
+		}else {
+			returnModel = {
+				read: read,
+				genre: genre,
+				date: year
+			}
+		}
+	} else {
+		if(year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY"){
+			returnModel = {
 				read: read,
 				fiction: fiction
-			}, (err, books) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(books);
-				}
-			});
-		} else if (year !== "any" & genre === "any") {
-			let books = db.bookModel.find({
-				read: read,
-				fiction: fiction,
-				year: year
-			}, (err, books) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(books);
-				}
-			});
-		} else if (year === "any" & genre !== "any") {
-			let books = db.bookModel.find({
+			}
+		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY"){
+			returnModel = {
 				read: read,
 				fiction: fiction,
 				genre: genre
-			}, (err, books) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(books);
-				}
-			});
-		} else {
-			let books = db.bookModel.find({
+			}
+		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY"){
+			returnModel = {
+				read: read,
+				fiction: fiction,
+				date: year
+			}
+		}else {
+			returnModel = {
 				read: read,
 				fiction: fiction,
 				genre: genre,
-				year: year
-			}, (err, books) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(books);
-				}
-			});
+				date: year
+			}
 		}
-	});
+	}
+	return returnModel;
 }
 
 

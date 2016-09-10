@@ -4,7 +4,10 @@ const express = require('express');
 const app = express();
 const bookworm = require('./app');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'));
 app.set('view engine', 'ejs');

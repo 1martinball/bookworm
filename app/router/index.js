@@ -14,6 +14,7 @@ module.exports = () => {
 			'/adduser': (req, res, next) => {
 				res.render('adduser', {
 					user: req.user,
+					error: false,
 					page: "Register new user"
 				});
 			},
@@ -22,19 +23,6 @@ module.exports = () => {
 					user: req.user,
 					page: "Add Books",
 					book: null
-				});
-			},
-			'/addbook': (req, res, next) => {
-				h.addBookData(req).then(book => {
-					console.log("Returned saved book : " + book);
-					res.render('addbooks', {
-						user: req.user,
-						page: "Add Books",
-						book: book
-					});
-				})
-				.catch(err => {
-					console.log(err);
 				});
 			},
 			'/findbooks': (req, res, next) => {
@@ -71,6 +59,35 @@ module.exports = () => {
 			}
 		},
 		'post': {
+			'/adduser': (req, res, next) => {
+				h.createNewUser(req).then(user => {
+					console.log("Returned new user : " + user);
+					res.render('login', {
+						user: user,
+						page: "User Added : Please Login"
+					});
+				})
+				.catch(err => {
+					console.log("That username is taken. Please try again");
+					res.render('adduser', {
+						page: "Duplicate User. Please try again",
+						error: true
+					});
+				});
+			},
+			'/addbook': (req, res, next) => {
+				h.addBookData(req).then(book => {
+					console.log("Returned saved book : " + book);
+					res.render('addbooks', {
+						user: req.user,
+						page: "Add Books",
+						book: book
+					});
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			}
 
 		},
 		'NA': (req, res, next) => {

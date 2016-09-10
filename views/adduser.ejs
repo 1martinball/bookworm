@@ -1,24 +1,43 @@
 <% include header %>
-	
-	<form>
-          
-          <div class="row">
-            <div class="large-6 medium-6 columns">
-              <label>Enter your name:</label>
-              <input type="text" placeholder="Enter you name" />
-            </div>
-            <div class="large-6 medium-6 columns">
-              <label>Enter youe email:</label>
-              <input type="text" placeholder="Enter you email address" />
-            </div>
-          </div>
-          <div class="row">
-			<div class="large-8 large-centered columns">
-				<a href="menu" class="button large large-12">Add User</a>
+
+	<form id="registerUserForm" method="post" action="adduser">
+
+		<div class="row">
+			<div class="large-6 medium-6 columns">
+				<label>Enter your first name:</label>
+				<input id='firstname' name='firstname' type="text" placeholder="Enter you first name" />
+			</div>
+			<div class="large-6 medium-6 columns">
+				<label>Enter your  last name:</label>
+				<input id='lastname' name='lastname' type="text" placeholder="Enter you last name" />
+			</div>
+			<div class="large-6 medium-6 columns">
+				<label>Enter a username:</label>
+				<input id='username' name='username' type="text" placeholder="Enter a new username" />
+			</div>
+			<div class="large-6 medium-6 columns">
+				<label>Enter a password:</label>
+				<input id='password' name='password' type="password" placeholder="Enter a password" />
 			</div>
 		</div>
-        </form>
-	
-	
-</body>
-</html>
+		<div class="row">
+			<div class="large-8 columns large-centered">
+				<input class="button large large-12" type="submit" value="Add User" />
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="large-6 large-centered columns">
+				<% if (error){ %>
+					<h4 class="large-12 label centered text-center alert">That username is taken. Please try again.</h4>
+				<% } %>
+			</div>
+
+
+		</div>
+	</form>
+
+
+	</body>
+
+	</html>

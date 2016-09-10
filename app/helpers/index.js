@@ -25,31 +25,66 @@ let route = routes => {
 }
 
 //Find a single user based on a key
-let findOne = function (profileID) {
-	return db.userModel.findOne({
-		'profileId': profileID
+let findUser = username => {
+	console.log("Searching for user : " + username);
+	return new Promise((resolve, reject) => {
+		console.log("Querying db");
+		db.userModel.findOne({
+			username: username
+		}, (error, user) => {
+			if (error) {
+				console.log("In error about to reject findUser")
+				reject(error);
+			} else if (user === null) {
+				console.log("About to resolve findUser : " + user)
+				resolve(user);
+			} else {
+				console.log("user is : " + user)
+				console.log("User is found about to reject findUser : " + user);
+				reject(new Error());
+			}
+		});
 	});
 }
 
 //Create a new user and returns that instance
-let createNewUser = profile => {
+let createNewUser = req => {
 	return new Promise((resolve, reject) => {
-		let newChatUser = new db.userModel({
-			profileId: profile.id,
-			fullName: profile.displayName,
-			profilePic: profile.photos[0].value || ''
+			let newChatUser = new db.userModel({
+				username: req.body.username,
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
+				password: req.body.password
+			});
+			console.log("NewChatUser with username " + newChatUser.username + " created");
+			findUser(newChatUser.username).then(user => {
+				console.log("user is : " + user);
+				if (user === null) {
+					newChatUser.save(error => {
+						if (error) {
+							reject(error);
+						} else {
+							console.log("About to resolve newChatUser");
+							resolve(newChatUser);
+						}
+					});
+				} else {
+					reject(new Error("Username already taken. Please try again."));
+				}
+
+			}).catch(error => {
+			console.log(error);
+			reject(error);
 		});
 
-		newChatUser.save(error => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(newChatUser);
-			}
-		});
+
+
 	});
 
 }
+
+
+
 
 // The ES6 promisified version of findById
 let findById = id => {
@@ -69,13 +104,14 @@ let addBookData = request => {
 	//console.log(request)
 	return new Promise((resolve, reject) => {
 		let newBook = new db.bookModel({
-			title: request.query.title,
-			author: request.query.author,
-			read: request.query.read,
-			fiction: request.query.fiction,
-			genre: request.query.genre,
-			date: request.query.year
+			title: request.body.title,
+			author: request.body.author,
+			read: request.body.read,
+			fiction: request.body.fiction,
+			genre: request.body.genre,
+			date: request.body.year
 		});
+
 
 		newBook.save(error => {
 			if (error) {
@@ -107,24 +143,24 @@ let findBookData = req => {
 	});
 }
 
-function constructFindQuery(read, fiction, genre, year){
+function constructFindQuery(read, fiction, genre, year) {
 	let returnModel = {};
-	if(fiction.toUpperCase() === "ALL"){
-		if(year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY"){
+	if (fiction.toUpperCase() === "ALL") {
+		if (year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY") {
 			returnModel = {
 				read: read
 			}
-		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY"){
+		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY") {
 			returnModel = {
 				read: read,
 				genre: genre
 			}
-		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY"){
+		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY") {
 			returnModel = {
 				read: read,
 				date: year
 			}
-		}else {
+		} else {
 			returnModel = {
 				read: read,
 				genre: genre,
@@ -132,24 +168,24 @@ function constructFindQuery(read, fiction, genre, year){
 			}
 		}
 	} else {
-		if(year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY"){
+		if (year.toUpperCase() === "ANY" & genre.toUpperCase() === "ANY") {
 			returnModel = {
 				read: read,
 				fiction: fiction
 			}
-		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY"){
+		} else if (year.toUpperCase() === "ANY" & genre.toUpperCase() != "ANY") {
 			returnModel = {
 				read: read,
 				fiction: fiction,
 				genre: genre
 			}
-		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY"){
+		} else if (year.toUpperCase() != "ANY" & genre.toUpperCase() === "ANY") {
 			returnModel = {
 				read: read,
 				fiction: fiction,
 				date: year
 			}
-		}else {
+		} else {
 			returnModel = {
 				read: read,
 				fiction: fiction,
@@ -166,7 +202,7 @@ function constructFindQuery(read, fiction, genre, year){
 
 module.exports = {
 	route,
-	findOne,
+	findUser,
 	createNewUser,
 	findById,
 	addBookData,

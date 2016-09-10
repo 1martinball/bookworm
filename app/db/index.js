@@ -9,12 +9,14 @@ Mongoose.connection.on('error', error => {
 
 //Create a schema that defines the structure for storing user data
 const bwUser = new Mongoose.Schema({
-	profileId: String,
-	fullName: String,
-	profilePic: String
+	firstname: String,
+	lastname: String,
+	username: String,
+	password: String
 });
 
 const bwBook = new Mongoose.Schema({
+	users : [bwUser],
 	title: String,
 	author: String,
 	fiction: Boolean,

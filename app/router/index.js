@@ -8,7 +8,8 @@ module.exports = () => {
 		'get': {
 			'/': (req, res, next) => {
 				res.render('login', {
-					page: "Login or Register"
+					page: "Login or Register",
+					error: false
 				});
 			},
 			'/adduser': (req, res, next) => {
@@ -64,15 +65,42 @@ module.exports = () => {
 					console.log("Returned new user : " + user);
 					res.render('login', {
 						user: user,
-						page: "User Added : Please Login"
+						page: "User Added : Please Login",
+						error: false
 					});
 				})
 				.catch(err => {
 					console.log("That username is taken. Please try again");
 					res.render('adduser', {
-						page: "Duplicate User. Please try again",
+						page: "Duplicate User - Please try again",
 						error: true
 					});
+				});
+			},
+			'/login': (req, res, next) => {
+				h.findUser(req.body.username).then(user => {
+					console.log("user is : " + user);
+					if (user === null) {
+						res.render('login', {
+							page: "Incorrect details - Please try again",
+							error: true
+						});
+					} else {
+						if(h.isPasswordValid(req.body.password, user.password)){
+							res.render('menu', {
+								user: user,
+								page: "Choose an option below"
+							});
+						} else {
+							res.render('login', {
+							page: "Incorrect details - Please try again",
+							error: true
+						});
+						}
+					}
+				}).catch(error => {
+					console.log(error);
+					reject(error);
 				});
 			},
 			'/addbook': (req, res, next) => {

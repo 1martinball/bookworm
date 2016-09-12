@@ -1,34 +1,41 @@
 <% include header %>
-		
+	<!--html and body opening tags in header -->
+	<form id="loginForm" method="post" action="login">
 		<div class="row">
 			<div class="large-6 columns">
-				<label for="username">Enter you name</label>
-				<input type="text" id="username" name="username" placeholder="Enter your name"></input> 
+				<label for="username">Enter your name</label>
+				<input type="text" id="username" name="username" placeholder="Enter your name"></input>
 			</div>
 			<div class="large-6 columns">
 				<label for="password">Enter a password</label>
-				<input type="text" id="password" name="password" placeholder="Enter a password"></input> 
+				<input type="text" id="password" name="password" type="password" placeholder="Enter a password"></input>
 			</div>
 		</div>
 		<div class="row">
-			
+
 		</div>
 
 		<div class="row">
 			<div class="large-8 large-centered columns">
-				<a href="menu" class="button large large-12">Login</a>
+				<input class="button large large-12" type="submit" value="Login" />
 			</div>
 		</div>
-		
-		<div class="row">
-			<p class="text-center">or</p>
-		</div>
+
 		<div class="row">
 			<div class="large-8 large-centered columns">
 				<a href="adduser" class="button large large-12">Register</a>
 			</div>
 		</div>
-			
-</div>
-</body>
-</html>
+
+		<div class="row">
+			<div class="large-6 large-centered columns">
+				<% if (!!error){ %>
+					<h4 id="loginFailMessage" class="large-12 label centered text-center alert">Username or password details are incorrect. Please try again.</h4>
+				<% } %>
+			</div>
+		</div>
+
+	</form>
+	</body>
+
+	</html>

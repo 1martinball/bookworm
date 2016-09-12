@@ -56,6 +56,10 @@ $(document).ready(function () {
 		$('#addBookActionMsg').fadeOut('fast');
 	}, 3000);
 
+	setTimeout(function () {
+		$('#loginFailMessage').fadeOut('fast');
+	}, 3000);
+
 	$('#addBooksForm').validate({
 		rules: {
 			title: {

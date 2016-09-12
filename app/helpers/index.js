@@ -41,44 +41,49 @@ let findUser = username => {
 			} else {
 				console.log("user is : " + user)
 				console.log("User is found about to reject findUser : " + user);
-				reject(new Error());
+				//reject(new Error());
+				resolve(user);
 			}
 		});
 	});
 }
 
+let isPasswordValid = (enteredPassword, expectedPassword) => {
+	if(enteredPassword === expectedPassword){
+		return true;
+	}
+	return false;
+}
+
 //Create a new user and returns that instance
 let createNewUser = req => {
 	return new Promise((resolve, reject) => {
-			let newChatUser = new db.userModel({
-				username: req.body.username,
-				firstname: req.body.firstname,
-				lastname: req.body.lastname,
-				password: req.body.password
-			});
-			console.log("NewChatUser with username " + newChatUser.username + " created");
-			findUser(newChatUser.username).then(user => {
-				console.log("user is : " + user);
-				if (user === null) {
-					newChatUser.save(error => {
-						if (error) {
-							reject(error);
-						} else {
-							console.log("About to resolve newChatUser");
-							resolve(newChatUser);
-						}
-					});
-				} else {
-					reject(new Error("Username already taken. Please try again."));
-				}
+		let newChatUser = new db.userModel({
+			username: req.body.username,
+			firstname: req.body.firstname,
+			lastname: req.body.lastname,
+			password: req.body.password
+		});
+		console.log("NewChatUser with username " + newChatUser.username + " created");
+		findUser(newChatUser.username).then(user => {
+			console.log("user is : " + user);
+			if (user === null) {
+				newChatUser.save(error => {
+					if (error) {
+						reject(error);
+					} else {
+						console.log("About to resolve newChatUser");
+						resolve(newChatUser);
+					}
+				});
+			} else {
+				reject(new Error("Username already taken. Please try again."));
+			}
 
-			}).catch(error => {
+		}).catch(error => {
 			console.log(error);
 			reject(error);
 		});
-
-
-
 	});
 
 }
@@ -203,6 +208,7 @@ function constructFindQuery(read, fiction, genre, year) {
 module.exports = {
 	route,
 	findUser,
+	isPasswordValid,
 	createNewUser,
 	findById,
 	addBookData,
